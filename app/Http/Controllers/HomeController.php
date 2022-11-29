@@ -27,4 +27,8 @@ class HomeController extends Controller
     {
         return view('home', ['user' => Auth::user()]);
     }
+    
+    function update(Request $request) {
+        /// por implementar
+    }
 }

@@ -24,7 +24,7 @@
             </p>
             <div class="collapse" id="collapseUser">
                 <div class="card card-body">
-                    <form action="{{ url('home/update') }}" method="post">
+                    <form action="{{ url('user/update') }}" method="post">
                         @csrf
                         @method('put')
                         <div class="form-group">
