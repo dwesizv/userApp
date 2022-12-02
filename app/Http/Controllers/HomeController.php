@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
 
     public function __construct() {
         $this->middleware('auth');
@@ -35,12 +34,7 @@ class HomeController extends Controller
             $user->email_verified_at = null;
             $sendEmail = true;
         }
-        try {
-            $user->update();
-            if($sendEmail) {
-                $user->sendEmailVerificationNotification();
-            } 
-        } catch(\Exception $e) {
+        if (!$user->updateUser($sendEmail)) {
             return back()
                      ->withInput()
                      ->withErrors(['message' => 'An unexpected error occurred while updating.']);

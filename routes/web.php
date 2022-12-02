@@ -23,3 +23,5 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::put('user/update', [App\Http\Controllers\HomeController::class, 'update'])->name('user.update');
+
+Route::resource('admin', App\Http\Controllers\AdministrationController::class);

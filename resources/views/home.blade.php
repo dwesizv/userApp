@@ -13,6 +13,11 @@
                         </div>
                     @endif
                     {{ __('You are logged in!') }}
+                    <br>
+                    @if (Auth::user()->isAdmin())
+                        You are admin.
+                        <a href="{{ url('admin') }}">Administration User</a>
+                    @endif
                 </div>
             </div>
         </div>

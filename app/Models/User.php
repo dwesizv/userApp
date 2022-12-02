@@ -42,4 +42,28 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    function isAdmin() {
+        return $this->type == 'admin';
+    }
+
+    function isAdvanced() {
+        return $this->type == 'advanced' || $this->type == 'admin';
+    }
+
+    function isUser() {
+        return $this->type == 'user' || $this->type == 'advanced' || $this->type == 'admin';
+    }
+
+    function updateUser($sendEmail = false) {
+        try {
+            $this->update();
+            if($sendEmail) {
+                $this->sendEmailVerificationNotification();
+            }
+            return true;
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
 }
