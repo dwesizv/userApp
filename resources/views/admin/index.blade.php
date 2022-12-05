@@ -23,9 +23,6 @@
       </div>
     </div>
     <div class="row" style="margin-top: 8px;">
-        @error('message')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
         <table class="table table-striped" id="userTable">
             <thead>
                 <tr>

@@ -80,6 +80,7 @@ class AdministrationController extends Controller
             $result = $user->deleteUser();
             if($result) {
                 $message = 'User ' . $name . ' has been removed.';
+                return redirect('admin')->with(['message' => $message]);
             }
         }
         return redirect('admin')->withErrors(['message' => $message]);
