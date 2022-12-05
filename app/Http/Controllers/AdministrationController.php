@@ -19,7 +19,6 @@ class AdministrationController extends Controller {
     }
 
     public function destroy(User $user) {
-        $message = 'User ' . $user->name . ' has not been removed.';
         if($user->email != Auth::user()->email) {
             $name = $user->name;
             if($user->deleteUser()) {
@@ -27,6 +26,7 @@ class AdministrationController extends Controller {
                 return redirect('admin')->with(['message' => $message]);
             }
         }
+        $message = 'User ' . $user->name . ' has not been removed.';
         return redirect('admin')->withErrors(['message' => $message]);
     }
 
@@ -57,12 +57,12 @@ class AdministrationController extends Controller {
         $user->email_verified_at = Carbon::parse(Carbon::now());
         if($user->storeUser()) {
             $message = 'User has been created.';
+            return redirect('admin')->with('message', $message);
         } else {
             return back()
                 ->withInput()
                 ->withErrors(['message' => 'An unexpected error occurred while creating.']);
         }
-        return redirect('admin')->with('message', $message);
     }
 
     public function update(Request $request, User $user) {
@@ -74,12 +74,11 @@ class AdministrationController extends Controller {
         }
         if($user->updateUser()) {
             $message = 'User has been updated.';
+            return redirect('admin')->with('message', $message);
         } else {
             return back()
                     ->withInput()
                     ->withErrors(['message' => 'An unexpected error occurred while updating.']);
         }
-        return redirect('admin')->with('message', $message);
     }
-
 }
