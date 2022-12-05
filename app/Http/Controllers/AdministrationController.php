@@ -2,31 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
-class AdministrationController extends Controller
-{
-    
+class AdministrationController extends Controller {
+
     function __construct() {
         $this->middleware('admin');
     }
 
-    public function index() {
-        $users = User::all();
-        return view('admin.index', ['users' => $users]);
+    function create() {
+        return view('admin.create', ['types' => self::getTypes()]);
     }
 
-    public function create() {
-        $types = [
+    public function destroy(User $user) {
+        $message = 'User ' . $user->name . ' has not been removed.';
+        if($user->email != Auth::user()->email) {
+            $name = $user->name;
+            if($user->deleteUser()) {
+                $message = 'User ' . $name . ' has been removed.';
+                return redirect('admin')->with(['message' => $message]);
+            }
+        }
+        return redirect('admin')->withErrors(['message' => $message]);
+    }
+
+    public function edit(User $user) {
+        return view('admin.edit', ['user' => $user, 'types' => self::getTypes()]);
+    }
+
+    private static function getTypes() {
+        return [
             'admin' => 'Administrator',
             'advanced' => 'Advanced User',
             'user' => 'User',
         ];
-        return view('admin.create', ['types' => $types]);
+    }
+
+    function index() {
+        $users = User::all();
+        return view('admin.index', ['users' => $users]);
+    }
+
+    public function show(User $user) {
+        return view('admin.show');
     }
 
     public function store(Request $request) {
@@ -41,19 +63,6 @@ class AdministrationController extends Controller
                 ->withErrors(['message' => 'An unexpected error occurred while creating.']);
         }
         return redirect('admin')->with('message', $message);
-    }
-
-    public function show(User $user) {
-        return view('admin.show');
-    }
-
-    public function edit(User $user) {
-        $types = [
-            'admin' => 'Administrator',
-            'advanced' => 'Advanced User',
-            'user' => 'User',
-        ];
-        return view('admin.edit', ['user' => $user, 'types' => $types]);
     }
 
     public function update(Request $request, User $user) {
@@ -71,19 +80,6 @@ class AdministrationController extends Controller
                     ->withErrors(['message' => 'An unexpected error occurred while updating.']);
         }
         return redirect('admin')->with('message', $message);
-    }
-
-    public function destroy(User $user) {
-        $message = 'User ' . $user->name . ' has not been removed.';
-        if($user->email != Auth::user()->email) {
-            $name = $user->name;
-            $result = $user->deleteUser();
-            if($result) {
-                $message = 'User ' . $name . ' has been removed.';
-                return redirect('admin')->with(['message' => $message]);
-            }
-        }
-        return redirect('admin')->withErrors(['message' => $message]);
     }
 
 }
