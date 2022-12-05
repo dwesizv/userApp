@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <select name="types" id="types">
+            <select name="type" id="type" required>
                 @foreach ($types as $index => $type)
                   <option value="{{ $index }}" @if($user->type == $index) selected @endif> {{ $type }}</option>
                 @endforeach

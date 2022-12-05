@@ -39,6 +39,9 @@ class HomeController extends Controller {
                      ->withInput()
                      ->withErrors(['message' => 'An unexpected error occurred while updating.']);
         }
+        if($sendEmail) {
+            $user->sendEmailVerificationNotification();
+        }
         return redirect('home')->with('message', $message);
     }
 

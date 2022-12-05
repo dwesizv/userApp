@@ -43,6 +43,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     
+    function deleteUser() {
+        $result = false;
+        try {
+            $this->delete();
+            $result = true;
+        } catch(\Exception $e) {
+        }
+        return $result;
+    }
+
     function isAdmin() {
         return $this->type == 'admin';
     }
@@ -55,12 +65,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->type == 'user' || $this->type == 'advanced' || $this->type == 'admin';
     }
 
-    function updateUser($sendEmail = false) {
+    function storeUser() {
+        try {
+            $this->save();
+            return true;
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+
+    function updateUser() {
         try {
             $this->update();
-            if($sendEmail) {
-                $this->sendEmailVerificationNotification();
-            }
             return true;
         } catch(\Exception $e) {
             return false;

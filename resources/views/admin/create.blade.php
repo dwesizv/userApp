@@ -19,6 +19,18 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="type">Type</label>
+            <select name="type" id="type" required>
+                <option value="" selected disabled hidden>Select type</option>
+                @foreach ($types as $index => $type)
+                  <option value="{{ $index }}"> {{ $type }}</option>
+                @endforeach
+            </select>
+            @error('type')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="password">User password</label>
             <input type="text" class="form-control" id="password" name="password" required placeholder="User password" >
             @error('password')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class AdministrationController extends Controller
@@ -20,20 +21,24 @@ class AdministrationController extends Controller
     }
 
     public function create() {
-        return view('admin.create');
+        $types = [
+            'admin' => 'Administrator',
+            'advanced' => 'Advanced User',
+            'user' => 'User',
+        ];
+        return view('admin.create', ['types' => $types]);
     }
 
     public function store(Request $request) {
-        try {
-            $user = new User($request->all());
-            $user->password = Hash::make($request->input('password'));
-            $user->email_verified_at = Carbon::parse(Carbon::now());
-            $user->save();
+        $user = new User($request->all());
+        $user->password = Hash::make($user->password);
+        $user->email_verified_at = Carbon::parse(Carbon::now());
+        if($user->storeUser()) {
             $message = 'User has been created.';
-        } catch(\Exception $e) {
+        } else {
             return back()
-                    ->withInput()
-                    ->withErrors(['message' => 'An unexpected error occurred while creating.']);
+                ->withInput()
+                ->withErrors(['message' => 'An unexpected error occurred while creating.']);
         }
         return redirect('admin')->with('message', $message);
     }
@@ -52,17 +57,15 @@ class AdministrationController extends Controller
     }
 
     public function update(Request $request, User $user) {
-        //validar name, email, password
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->type = $request->input('type');
         if($request->input('password') != null) {
             $user->password = Hash::make($request->input('password'));
         }
-        try {
-            $user->save();
-            //$user->update($request->all());
+        if($user->updateUser()) {
             $message = 'User has been updated.';
-        } catch(\Exception $e) {
+        } else {
             return back()
                     ->withInput()
                     ->withErrors(['message' => 'An unexpected error occurred while updating.']);
@@ -72,12 +75,14 @@ class AdministrationController extends Controller
 
     public function destroy(User $user) {
         $message = 'User ' . $user->name . ' has not been removed.';
-        if($user->email != 'admin@admin.es') {
-            try {
-                $user->delete();
-                $message = 'User ' . $user->name . ' has been removed.';
-            } catch(\Exception $e) {}
+        if($user->email != Auth::user()->email) {
+            $name = $user->name;
+            $result = $user->deleteUser();
+            if($result) {
+                $message = 'User ' . $name . ' has been removed.';
+            }
         }
         return redirect('admin')->withErrors(['message' => $message]);
     }
+
 }
