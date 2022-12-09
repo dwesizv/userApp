@@ -82,4 +82,8 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
     }
+    
+    function yates() {
+        return $this->hasMany('App\Models\Yate', 'iduser');
+    }
 }

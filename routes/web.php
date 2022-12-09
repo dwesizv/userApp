@@ -25,3 +25,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::put('user/update', [App\Http\Controllers\HomeController::class, 'update'])->name('user.update');
 
 Route::resource('admin', App\Http\Controllers\AdministrationController::class);
+Route::get('/yate', [App\Http\Controllers\YateController::class, 'index'])->name('yate.index');
