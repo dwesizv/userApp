@@ -24,7 +24,7 @@ class YateFactory extends Factory
             'idtipo'        => $this->faker->numberBetween(1, 4),
             'nombre'        => $this->faker->name(),
             'descripcion'   => $this->faker->text(),
-            'precio'        => $this->faker->numberBetween(10000, 9900000000)
+            'precio'        => $this->faker->numberBetween(1000, 999999)
         ];
     }
 }
