@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class YateController extends Controller {
 
     function index() {
-        $yates = Yate::all();
+        $yates = Yate::all()->sortBy('nombre');
         return view('yate.index', ['yates' => $yates]);
     }
 }
