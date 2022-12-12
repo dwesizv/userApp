@@ -5,13 +5,13 @@
         <table class="table table-striped" id="userTable">
             <thead>
                 <tr>
-                    <th scope="col"># id</th>
-                    <th scope="col">nombre</th>
-                    <th scope="col">idtipo</th>
-                    <th scope="col">iduser</th>
-                    <th scope="col">idastillero</th>
-                    <th scope="col">descripción</th>
-                    <th scope="col">precio</th>
+                    <th scope="col"># id &#x25b4;&#x25be;</th>
+                    <th scope="col">nombre &#x25b4;&#x25be;</th>
+                    <th scope="col">idtipo &#x25b4;&#x25be;</th>
+                    <th scope="col">iduser &#x25b4;&#x25be;</th>
+                    <th scope="col">idastillero &#x25b4;&#x25be;</th>
+                    <th scope="col">descripción &#x25b4;&#x25be;</th>
+                    <th scope="col">precio &#x25b4;&#x25be;</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,13 +24,13 @@
                         {{ $yate->nombre }}
                     </td>
                     <td>
-                        {{ $yate->tipo->nombre }}
+                        {{ $yate->idtipo }} {{ $yate->tipo->nombre }} <!-- usando el método tipo (belongsTo) de la clase Yate -->
                     </td>
                     <td>
-                        {{ $yate->user->name }}
+                        {{ $yate->iduser }} {{ $yate->user->name }} <!-- usando el método user (belongsTo) de la clase Yate -->
                     </td>
                     <td>
-                        {{ $yate->astillero->nombre }}
+                        {{ $yate->idastillero }} {{ $yate->astillero->nombre }} <!-- usando el método astillero (belongsTo) de la clase Yate -->
                     </td>
                     <td>
                         {{ substr($yate->descripcion, 0, 10) }}...

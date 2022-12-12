@@ -16,8 +16,10 @@
                     <br>
                     @if (Auth::user()->isAdmin())
                         You are admin.
-                        <a href="{{ url('admin') }}">Administration User</a>
+                        <a href="{{ url('admin') }}">User Administration</a>
                     @endif
+                    <br>
+                    <a href="{{ url('yate') }}">Yachts</a>
                 </div>
             </div>
         </div>
