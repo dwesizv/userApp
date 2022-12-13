@@ -7,66 +7,38 @@
                 <tr>
                     <th scope="col">
                         # id 
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['id'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['id'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['id']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['id']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         nombre
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['nombre'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['nombre'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['nombre']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['nombre']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         idtipo
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['idtipo'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['idtipo'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['idtipo']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['idtipo']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         iduser
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['iduser'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['iduser'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['iduser']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['iduser']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         idastillero
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['idastillero'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['idastillero'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['idastillero']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['idastillero']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         descripción
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['descripcion'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['descripcion'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['descripcion']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['descripcion']['desc'] }}">&#x25be;</a>
                     </th>
                     <th scope="col">
                         precio
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['precio'],
-                                     'ordertype' => $ordertype['asc']])}}">&#x25b4;</a>
-                        <a href="{{route('yate.index',
-                                    ['orderby' => $orderby['precio'],
-                                     'ordertype' => $ordertype['desc']])}}">&#x25be;</a>
+                        <a href="{{ $order['precio']['asc'] }}">&#x25b4;</a>
+                        <a href="{{ $order['precio']['desc'] }}">&#x25be;</a>
                     </th>
                 </tr>
             </thead>

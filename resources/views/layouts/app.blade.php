@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <title>laravel - dwes - {{ $table ?? 'users'}}</title>
@@ -8,7 +8,7 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="{{ url('') }}">users</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse">
@@ -43,7 +43,7 @@
             </div>
         </nav>
         @yield('modalContent')
-        <main role="main">
+        <main>
             <div class="jumbotron">
                 <div class="container">
                     <h4 class="display-4">{{ $title ?? 'UserApp' }}</h4>

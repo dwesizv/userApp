@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class YateController extends Controller {
 
-    private function getOrderBy() {
+    const ORDER_BY = 'nombre';
+    const ORDER_TYPE = 'asc';
+
+    private function getOrderBy($order) {
+        return $this->order($this->getOrderBys(), $order, self::ORDER_BY);
+    }
+
+    private function getOrderBys() {
         return [
             'id'            => 'c1',
             'nombre'        => 'c2',
@@ -20,22 +27,51 @@ class YateController extends Controller {
         ];
     }
 
-    private function getOrderType() {
+    private function getOrderType($order) {
+        return $this->order($this->getOrderTypes(), $order, self::ORDER_TYPE);
+    }
+
+    private function getOrderTypes() {
         return [
             'asc'  => 't1',
             'desc' => 't2',
         ];
     }
+    
+    private function getOrderUrls($oBy, $oType) {
+        $urls = [];
+        $orderBys = $this->getOrderBys();
+        $orderTypes = $this->getOrderTypes();
+        foreach($orderBys as $indexBy => $by) {
+            foreach($orderTypes as $indexType => $type) {
+                if($oBy == $indexBy && $oType == $indexType) {
+                    $urls[$indexBy][$indexType] = url()->full() . '#';
+                } else {
+                    $urls[$indexBy][$indexType] = route('yate.index',[
+                                                        'orderby' => $by,
+                                                        'ordertype' => $type]);
+                }
+            }
+        }
+        return $urls;
+    }
 
     function index(Request $request) {
-        $orderby = $this->orderBy($request->input('orderby'));
-        $ordertype = $this->orderType($request->input('ordertype'));
-        $yates = new Yate();
-        $yates = $yates->orderBy($orderby, $ordertype);
-        $yates = $yates->orderBy('nombre', 'asc')->get();
-        return view('yate.index', ['orderby'    => $this->getOrderBy(),
-                                    'ordertype' => $this->getOrderType(),
-                                    'yates'     => $yates]);
+        //orden
+        $orderby = $this->getOrderBy($request->input('orderby'));
+        $ordertype = $this->getOrderType($request->input('ordertype'));
+
+        //datos
+        $yate = new Yate();
+        $yate = $yate->orderBy($orderby, $ordertype);
+        if($orderby != self::ORDER_BY) {
+            $yate = $yate->orderBy('nombre', 'asc');
+        }
+        $yates = $yate->get();
+
+        //vista
+        return view('yate.index', ['order'  => $this->getOrderUrls($orderby, $ordertype),
+                                    'yates' => $yates]);
     }
 
     private function order($orderArray, $order, $default) {
@@ -46,11 +82,4 @@ class YateController extends Controller {
         return $value;
     }
 
-    private function orderBy($order) {
-        return $this->order($this->getOrderBy(), $order, 'nombre');
-    }
-
-    private function orderType($order) {
-        return $this->order($this->getOrderType(), $order, 'asc');
-    }
 }
