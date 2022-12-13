@@ -11,8 +11,16 @@ class YateController extends Controller {
     const ORDER_BY = 'nombre';
     const ORDER_TYPE = 'asc';
 
+    private function getOrder($orderArray, $order, $default) {
+        $value = array_search($order, $orderArray);
+        if(!$value) {
+            return $default;
+        }
+        return $value;
+    }
+
     private function getOrderBy($order) {
-        return $this->order($this->getOrderBys(), $order, self::ORDER_BY);
+        return $this->getOrder($this->getOrderBys(), $order, self::ORDER_BY);
     }
 
     private function getOrderBys() {
@@ -28,7 +36,7 @@ class YateController extends Controller {
     }
 
     private function getOrderType($order) {
-        return $this->order($this->getOrderTypes(), $order, self::ORDER_TYPE);
+        return $this->getOrder($this->getOrderTypes(), $order, self::ORDER_TYPE);
     }
 
     private function getOrderTypes() {
@@ -72,14 +80,6 @@ class YateController extends Controller {
         //vista
         return view('yate.index', ['order'  => $this->getOrderUrls($orderby, $ordertype),
                                     'yates' => $yates]);
-    }
-
-    private function order($orderArray, $order, $default) {
-        $value = array_search($order, $orderArray);
-        if(!$value) {
-            return $default;
-        }
-        return $value;
     }
 
 }
